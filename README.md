@@ -14,6 +14,7 @@
   - springboot：`https://gitee.com/huhuiyu/template-springboot2`
   - vue：`https://gitee.com/huhuiyu/template-vue`
 - 演示项目源码相关地址-github（主仓库）
+  - 本项目：`https://github.com/huhuiyu/java-project-2103`
   - 数据库教程：`https://github.com/huhuiyu/sql`
   - 环境配置：`https://github.com/huhuiyu/env`
   - springboot：`https://github.com/huhuiyu/template-springboot2`
