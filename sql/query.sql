@@ -92,7 +92,6 @@ select max(salary),min(salary),avg(salary),sum(salary)
 from tb_employee;
 
 
-
 -- 如果select的列出现了聚合函数，那么所有的不在聚合函数中的列
 -- 就必须出现在group by中
 
@@ -106,6 +105,35 @@ from tb_employee
 group by year(birthday);
 
 
+select avg(salary) from tb_employee;
+
+select 
+* , (select avg(salary) from tb_employee) 'avg_salary'
+, salary - (select avg(salary) from tb_employee) 'sal'
+from tb_employee;
 
 
+select * from tb_employee
+where salary < (select avg(salary) from tb_employee) ;
+
+select * from tb_dept
+where not dept_id in
+(
+  select dept_id 
+  from tb_employee
+  group by dept_id
+)
+
+
+
+
+
+
+select * from
+(
+  select 
+  * , (select avg(salary) from tb_employee) 'avg_salary'
+  , salary - (select avg(salary) from tb_employee) 'sal'
+  from tb_employee
+) aaa
 
