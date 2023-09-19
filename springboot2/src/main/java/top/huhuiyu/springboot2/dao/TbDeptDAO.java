@@ -10,4 +10,5 @@ import java.util.List;
 public interface TbDeptDAO {
     List<TbDept> query() throws Exception;
 
+    int add(TbDept dept) throws Exception;
 }

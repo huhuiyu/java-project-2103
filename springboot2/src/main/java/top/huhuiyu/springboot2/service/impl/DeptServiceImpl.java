@@ -26,4 +26,16 @@ public class DeptServiceImpl implements DeptService {
         result.setData(tbDeptDAO.query());
         return result;
     }
+
+    @Override
+    public BaseResult<TbDept> add(TbDept dept) throws Exception {
+        BaseResult<TbDept> result = new BaseResult<>();
+        int i = tbDeptDAO.add(dept);
+        result.setCode(i == 1 ? 200 : 500);
+        result.setSuccess(i == 1);
+        result.setMessage(i == 1 ? "添加成功" : "添加失败");
+        result.setData(dept);
+        return result;
+    }
+
 }

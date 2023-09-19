@@ -8,4 +8,15 @@
         select * from tb_dept
     </select>
 
+    <!--
+        如果主键列是自动增长的，可以使用如下方法在添加成功后拿到主键列的值
+        useGeneratedKeys="true"表示启用获取自动增长列的值功能
+        keyProperty表示将获取到的值设置到对应的实体类的字段
+    -->
+    <insert id="add" parameterType="TbDept" keyProperty="deptId" useGeneratedKeys="true">
+        insert into tb_dept(dept_name,dept_info)
+        values(#{deptName},#{deptInfo})
+    </insert>
+
+
 </mapper>

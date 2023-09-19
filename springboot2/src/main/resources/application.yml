@@ -1,5 +1,5 @@
 server:
-  port: 10000
+  port: 12000
 # spring配置json应答中日期返回为时间戳格式
 spring:
   jackson:
