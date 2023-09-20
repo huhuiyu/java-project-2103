@@ -28,4 +28,13 @@ public class DeptController {
         return deptService.add(dept);
     }
 
+    @PostMapping("/update")
+    public BaseResult<TbDept> update(TbDept dept) throws Exception {
+        return deptService.update(dept);
+    }
+
+    @PostMapping("/delete")
+    public BaseResult<TbDept> delete(TbDept dept) throws Exception {
+        return deptService.delete(dept);
+    }
 }

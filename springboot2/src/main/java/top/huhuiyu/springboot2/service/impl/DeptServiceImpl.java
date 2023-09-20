@@ -38,4 +38,26 @@ public class DeptServiceImpl implements DeptService {
         return result;
     }
 
+    @Override
+    public BaseResult<TbDept> update(TbDept dept) throws Exception {
+        BaseResult<TbDept> result = new BaseResult<>();
+        int i = tbDeptDAO.update(dept);
+        result.setCode(i == 1 ? 200 : 500);
+        result.setSuccess(i == 1);
+        result.setMessage(i == 1 ? "修改成功" : "修改失败");
+        result.setData(dept);
+        return result;
+    }
+
+    @Override
+    public BaseResult<TbDept> delete(TbDept dept) throws Exception {
+        BaseResult<TbDept> result = new BaseResult<>();
+        int i = tbDeptDAO.delete(dept);
+        result.setCode(i == 1 ? 200 : 500);
+        result.setSuccess(i == 1);
+        result.setMessage(i == 1 ? "删除成功" : "删除失败");
+        result.setData(dept);
+        return result;
+    }
+
 }

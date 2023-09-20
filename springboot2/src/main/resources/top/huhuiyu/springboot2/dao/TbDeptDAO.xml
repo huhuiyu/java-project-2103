@@ -18,5 +18,15 @@
         values(#{deptName},#{deptInfo})
     </insert>
 
+    <update id="update" parameterType="TbDept">
+        update tb_dept
+        set dept_name = #{deptName} , dept_info = #{deptInfo}
+        where dept_id = #{deptId}
+    </update>
+
+    <delete id="delete" parameterType="TbDept">
+        delete from tb_dept
+        where dept_id = #{deptId}
+    </delete>
 
 </mapper>
