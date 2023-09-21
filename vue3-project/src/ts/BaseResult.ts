@@ -13,4 +13,13 @@ class BaseResult {
   token: string = ''
 }
 
-export { PageInfo as PageInfo, BaseResult as BaseResult }
+class BaseListResult<T> extends BaseResult {
+  page: PageInfo = new PageInfo()
+  list: Array<T> = []
+}
+
+export { 
+  PageInfo as PageInfo
+  , BaseResult as BaseResult
+  , BaseListResult as BaseListResult 
+}
