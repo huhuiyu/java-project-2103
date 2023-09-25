@@ -1,5 +1,6 @@
 import { createRouter, RouteRecordRaw, createWebHistory } from 'vue-router'
 import manage from './manage'
+import study from './study'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -16,7 +17,9 @@ const routes: RouteRecordRaw[] = [
     path: '/test',
     component: () => import('../view/Test.vue'),
   },
-].concat(manage)
+]
+  .concat(manage)
+  .concat(study)
 
 // 创建router
 const router = createRouter({
