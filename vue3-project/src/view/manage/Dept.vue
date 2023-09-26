@@ -34,6 +34,9 @@
     </ElTable>
 
     <ElPagination :total="page.total" v-model:page-size="page.pageSize" v-model:current-page="page.pageNumber" @current-change="query" @size-change="requery" :page-sizes="[3, 5, 10, 20]" layout="prev,pager,next,total,sizes"></ElPagination>
+    <hr />
+
+    <PageComp :page="page" @page-change="query" @size-change="sizeChange"></PageComp>
   </div>
 
   <!-- 添加的对话框 -->
@@ -79,7 +82,6 @@
       </div>
     </template>
   </ElDialog>
-  
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue'
@@ -88,6 +90,7 @@ import Tools from '../../ts/Tools'
 import { BaseResult, BaseListResult, PageInfo } from '../../ts/BaseResult'
 import { Dept } from '../../ts/Manage'
 import { ElDialog, ElButton, ElMessageBox, ElPagination, ElTable, ElTableColumn, ElForm, ElFormItem, ElInput } from 'element-plus'
+import PageComp from '../../components/PageComp.vue'
 
 const title = ref('部门管理')
 
@@ -98,6 +101,10 @@ const list = ref(new Array<Dept>())
 const queryInfo = ref({
   deptName: '',
 })
+
+function sizeChange(page: PageInfo) {
+  console.log('分页组件传递的信息：', page)
+}
 
 function reset() {
   queryInfo.value = {

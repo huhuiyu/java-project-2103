@@ -5,9 +5,14 @@
     <RouterLink to="/study/complife">生命周期演示</RouterLink>
   </div>
   <hr />
-  <MyCompOne info="属性值传入" :dept="viewdata.dept"></MyCompOne>
+  <MyCompOne info="属性值传入" :dept="viewdata.dept">
+    <div>组件标签里面的内容</div>
+    <template #footer>带名称的插槽里面的内容</template>
+  </MyCompOne>
   <hr />
-  <MyCompOne :info="viewdata.info"></MyCompOne>
+  <MyCompOne :info="viewdata.info" @change-info="showCompInfo">
+    <template #footer>任意搭配</template>
+  </MyCompOne>
 
   <hr />
   <input id="myinput" type="text" v-model="viewdata.info" />
@@ -45,5 +50,10 @@ onUnmounted(() => {
   // 页面销毁时调用本钩子函数
   console.log('comp页面销毁...')
 })
+
+function showCompInfo(info: String) {
+  // 响应子组件自定事件，并获取传递的数据
+  console.log('应答子组件的事件', info)
+}
 </script>
 <style></style>

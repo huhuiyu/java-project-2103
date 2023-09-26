@@ -11,6 +11,7 @@ declare module 'vue' {
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElInput: typeof import('element-plus/es')['ElInput']
     MyCompOne: typeof import('./src/components/MyCompOne.vue')['default']
+    PageComp: typeof import('./src/components/PageComp.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
