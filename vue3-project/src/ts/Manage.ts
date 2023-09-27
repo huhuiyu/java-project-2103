@@ -7,4 +7,13 @@ class Dept {
   lastupdate: number | null = null
 }
 
-export { Dept as Dept }
+class Employee {
+  deptId: number | null = null
+  employeeId: number | null = null
+  employeeName: string = ''
+  phone: string = ''
+  lastupdate: number | null = null
+  dept: Dept | null = null
+}
+
+export { Dept as Dept, Employee as Employee }

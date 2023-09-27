@@ -7,9 +7,12 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    DeptComp: typeof import('./src/components/DeptComp.vue')['default']
+    ElButton: typeof import('element-plus/es')['ElButton']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElInput: typeof import('element-plus/es')['ElInput']
+    ElTable: typeof import('element-plus/es')['ElTable']
     MyCompOne: typeof import('./src/components/MyCompOne.vue')['default']
     PageComp: typeof import('./src/components/PageComp.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

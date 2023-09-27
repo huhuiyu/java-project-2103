@@ -82,4 +82,5 @@ const ApiService = {
   },
 }
 
-export { ApiService as default, serverInfo as serverInfo }
+export default ApiService
+export { ApiService as ApiService, serverInfo as serverInfo }

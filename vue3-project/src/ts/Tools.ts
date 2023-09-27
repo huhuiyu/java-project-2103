@@ -225,4 +225,5 @@ class FileInfo {
   name: string = ''
 }
 
-export { Tools as default, FileInfo as FileInfo }
+export default Tools
+export { Tools as Tools, FileInfo as FileInfo }
