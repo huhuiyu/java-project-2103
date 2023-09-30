@@ -1,7 +1,9 @@
-# github链接地址：git remote add github git@github.com:huhuiyu/java-project-2103.git
-# jihulab链接地址：git remote add jihulab git@jihulab.com:DarkKnight/java-project-2103.git
-# gitee链接地址：git remote add gitee git@gitee.com:huhuiyu/java-project-2103.git
+# 多仓库推送
 git pull
-git push
-git push github
+Write-Output "===========拉取完成==========="
 git push jihulab
+Write-Output "===========推送jihulab完成==========="
+git push gitee
+Write-Output "===========推送gitee完成==========="
+git push
+Write-Output "===========推送github完成==========="
