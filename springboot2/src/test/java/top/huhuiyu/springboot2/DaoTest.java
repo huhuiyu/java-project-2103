@@ -5,10 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import top.huhuiyu.springboot2.dao.TbDeptDAO;
 import top.huhuiyu.springboot2.entity.TbDept;
 import top.huhuiyu.springboot2.utils.JsonUtils;
@@ -30,7 +26,14 @@ public class DaoTest {
 
     @Test
     public void one() throws Exception {
-        List<TbDept> list = tbDeptDAO.query();
+        TbDept qdept = new TbDept();
+        List<TbDept> list = tbDeptDAO.query(qdept);
+        for (TbDept dept : list) {
+            logger.debug("{}", JsonUtils.stringify(dept));
+        }
+        logger.debug("===================================================");
+        qdept.setDeptName("%人%");
+        list = tbDeptDAO.query(qdept);
         for (TbDept dept : list) {
             logger.debug("{}", JsonUtils.stringify(dept));
         }

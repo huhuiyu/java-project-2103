@@ -1,6 +1,7 @@
 package top.huhuiyu.springboot2.service;
 
 import top.huhuiyu.springboot2.base.BaseResult;
+import top.huhuiyu.springboot2.entity.PageBean;
 import top.huhuiyu.springboot2.entity.TbDept;
 
 import java.util.List;
@@ -9,10 +10,12 @@ public interface DeptService {
     /**
      * 查询所有部门信息
      *
+     * @param dept 部门查询条件
+     * @param page 分页条件
      * @return 所有部门信息
      * @throws Exception 处理发生异常
      */
-    BaseResult<List<TbDept>> query() throws Exception;
+    BaseResult<List<TbDept>> query(TbDept dept, PageBean page) throws Exception;
 
     /**
      * 添加部门信息到数据库

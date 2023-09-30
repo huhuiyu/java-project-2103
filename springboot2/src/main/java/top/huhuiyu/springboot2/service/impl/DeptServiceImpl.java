@@ -1,12 +1,16 @@
 package top.huhuiyu.springboot2.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import top.huhuiyu.springboot2.base.BaseResult;
 import top.huhuiyu.springboot2.dao.TbDeptDAO;
+import top.huhuiyu.springboot2.entity.PageBean;
 import top.huhuiyu.springboot2.entity.TbDept;
 import top.huhuiyu.springboot2.service.DeptService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DeptServiceImpl implements DeptService {
@@ -18,12 +22,23 @@ public class DeptServiceImpl implements DeptService {
     }
 
     @Override
-    public BaseResult<List<TbDept>> query() throws Exception {
+    public BaseResult<List<TbDept>> query(TbDept dept, PageBean page) throws Exception {
+        // 查询条件
+        dept = Optional.ofNullable(dept).orElse(new TbDept());
+        if (StringUtils.hasText(dept.getDeptName())) {
+            dept.setDeptName(String.format("%%%s%%", dept.getDeptName()));
+        }
+        // 分页处理
+        page = Optional.ofNullable(page).orElse(new PageBean());
+        // 启用分页查询
+        PageHelper.startPage(page.getPageNumber(), page.getPageSize());
+        List<TbDept> list = tbDeptDAO.query(dept);
+
         BaseResult<List<TbDept>> result = new BaseResult<>();
         result.setCode(200);
         result.setSuccess(true);
         result.setMessage("");
-        result.setData(tbDeptDAO.query());
+        result.setData(list);
         return result;
     }
 

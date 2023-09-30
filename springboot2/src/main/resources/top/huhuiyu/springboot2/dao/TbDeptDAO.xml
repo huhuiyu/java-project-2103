@@ -4,8 +4,24 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.huhuiyu.springboot2.dao.TbDeptDAO">
 
-    <select id="query" resultType="TbDept">
+    <select id="query_COUNT" resultType="java.lang.Integer" parameterType="TbDept">
+        select count(*) from tb_dept
+        <!-- 如果deptName存在就添加部门名称过滤条件 -->
+        <where>
+            <if test="deptName != null and deptName!=''.toString()">
+                and dept_name like #{deptName}
+            </if>
+        </where>
+    </select>
+
+    <select id="query" resultType="TbDept" parameterType="TbDept">
         select * from tb_dept
+        <!-- 如果deptName存在就添加部门名称过滤条件 -->
+        <where>
+            <if test="deptName != null and deptName!=''.toString()">
+                and dept_name like #{deptName}
+            </if>
+        </where>
     </select>
 
     <!--

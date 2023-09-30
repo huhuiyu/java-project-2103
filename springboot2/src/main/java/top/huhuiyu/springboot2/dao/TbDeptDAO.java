@@ -7,7 +7,8 @@ import java.util.List;
 
 @Mapper
 public interface TbDeptDAO {
-    List<TbDept> query() throws Exception;
+    
+    List<TbDept> query(TbDept dept) throws Exception;
 
     int add(TbDept dept) throws Exception;
 
