@@ -1,8 +1,10 @@
 package top.huhuiyu.springboot2.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import top.huhuiyu.springboot2.base.BasePageResult;
 import top.huhuiyu.springboot2.base.BaseResult;
 import top.huhuiyu.springboot2.dao.TbDeptDAO;
 import top.huhuiyu.springboot2.entity.PageBean;
@@ -22,7 +24,7 @@ public class DeptServiceImpl implements DeptService {
     }
 
     @Override
-    public BaseResult<List<TbDept>> query(TbDept dept, PageBean page) throws Exception {
+    public BasePageResult<List<TbDept>> query(TbDept dept, PageBean page) throws Exception {
         // 查询条件
         dept = Optional.ofNullable(dept).orElse(new TbDept());
         if (StringUtils.hasText(dept.getDeptName())) {
@@ -33,12 +35,17 @@ public class DeptServiceImpl implements DeptService {
         // 启用分页查询
         PageHelper.startPage(page.getPageNumber(), page.getPageSize());
         List<TbDept> list = tbDeptDAO.query(dept);
+        // 回传分页信息
+        PageInfo<TbDept> pageInfo = new PageInfo<>(list);
+        page.setPageInfo(pageInfo);
 
-        BaseResult<List<TbDept>> result = new BaseResult<>();
+        BasePageResult<List<TbDept>> result = new BasePageResult<>();
         result.setCode(200);
         result.setSuccess(true);
         result.setMessage("");
         result.setData(list);
+        result.setPage(page);
+
         return result;
     }
 

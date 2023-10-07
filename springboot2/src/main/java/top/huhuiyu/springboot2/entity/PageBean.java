@@ -1,5 +1,7 @@
 package top.huhuiyu.springboot2.entity;
 
+import com.github.pagehelper.PageInfo;
+
 import java.io.Serializable;
 
 /**
@@ -16,6 +18,16 @@ public class PageBean implements Serializable {
     private int pageCount = 0;
 
     public PageBean() {
+    }
+
+    /**
+     * 通过PageInfo设置page信息
+     *
+     * @param pageInfo 分页信息
+     */
+    public void setPageInfo(PageInfo<?> pageInfo) {
+        this.setTotal((int) pageInfo.getTotal());
+        this.setPageNumber(pageInfo.getPageNum());
     }
 
     public int getPageNumber() {

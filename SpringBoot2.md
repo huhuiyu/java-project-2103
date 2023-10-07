@@ -18,3 +18,10 @@
   - 应用所在端口在application.yml中配置
   - 接口路径由controller定义
   - spring接管容器，所以所有核心业务类都无需通过new创建
+- 开发流程
+  - 编写实体类
+  - 编写dao和dao对应的mapper.xml文件
+  - 编写service和service的实现类
+  - 编写controller类
+  - 通过controller类定义的地址调用接口
+  

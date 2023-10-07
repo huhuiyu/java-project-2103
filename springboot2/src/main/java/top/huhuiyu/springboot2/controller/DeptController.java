@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import top.huhuiyu.springboot2.base.BasePageResult;
 import top.huhuiyu.springboot2.base.BaseResult;
 import top.huhuiyu.springboot2.entity.PageBean;
 import top.huhuiyu.springboot2.entity.TbDept;
@@ -20,7 +21,7 @@ public class DeptController {
     private DeptService deptService;
 
     @GetMapping("/query")
-    public BaseResult<List<TbDept>> query(TbDept dept, PageBean page) throws Exception {
+    public BasePageResult<List<TbDept>> query(TbDept dept, PageBean page) throws Exception {
         return deptService.query(dept, page);
     }
 
