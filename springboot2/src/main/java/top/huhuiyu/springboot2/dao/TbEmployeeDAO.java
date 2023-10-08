@@ -8,4 +8,6 @@ import java.util.List;
 @Mapper
 public interface TbEmployeeDAO {
     public List<TbEmployee> query(TbEmployee tbEmployee) throws Exception;
+
+    public List<TbEmployee> queryByAssociation(TbEmployee tbEmployee) throws Exception;
 }

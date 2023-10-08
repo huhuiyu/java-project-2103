@@ -1,6 +1,5 @@
 package top.huhuiyu.springboot2.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,5 +25,8 @@ public class EmployeeController {
         return tbEmployeeService.query(employee, page);
     }
 
-
+    @GetMapping("/queryByAssociation")
+    public BasePageResult<List<TbEmployee>> queryByAssociation(TbEmployee employee, PageBean page) throws Exception {
+        return tbEmployeeService.queryByAssociation(employee, page);
+    }
 }

@@ -11,8 +11,17 @@ public class TbEmployee implements Serializable {
     private String employeeName;
     private String phone;
     private Date lastupdate;
+    private TbDept dept;
 
     public TbEmployee() {
+    }
+
+    public TbDept getDept() {
+        return dept;
+    }
+
+    public void setDept(TbDept dept) {
+        this.dept = dept;
     }
 
     public Integer getEmployeeId() {

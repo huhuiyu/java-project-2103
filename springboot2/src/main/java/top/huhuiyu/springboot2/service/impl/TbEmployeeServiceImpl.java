@@ -34,4 +34,22 @@ public class TbEmployeeServiceImpl implements TbEmployeeService {
         result.setPage(page);
         return result;
     }
+
+    @Override
+    public BasePageResult<List<TbEmployee>> queryByAssociation(TbEmployee employee, PageBean page) throws Exception {
+        page = Optional.ofNullable(page).orElse(new PageBean());
+        PageHelper.startPage(page.getPageNumber(), page.getPageSize());
+        List<TbEmployee> list = tbEmployeeDAO.queryByAssociation(employee);
+        page.setPageInfo(new PageInfo<>(list));
+
+        BasePageResult<List<TbEmployee>> result = new BasePageResult<>();
+        result.setCode(200);
+        result.setSuccess(true);
+        result.setMessage("");
+        result.setData(list);
+        result.setPage(page);
+        return result;
+    }
+
+
 }

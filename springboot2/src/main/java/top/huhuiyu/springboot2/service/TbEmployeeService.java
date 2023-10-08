@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface TbEmployeeService {
     BasePageResult<List<TbEmployee>> query(TbEmployee employee, PageBean page) throws Exception;
+
+    BasePageResult<List<TbEmployee>> queryByAssociation(TbEmployee employee, PageBean page) throws Exception;
 }

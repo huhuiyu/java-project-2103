@@ -5,7 +5,30 @@
 <mapper namespace="top.huhuiyu.springboot2.dao.TbEmployeeDAO">
 
     <select id="query" resultType="TbEmployee" parameterType="TbEmployee">
-        select * from tb_employee
+        select a.* ,b.dept_name 'dept.deptName' ,b.dept_info 'dept.deptInfo'
+        from tb_employee a
+        inner join tb_dept b on a.dept_id = b.dept_id
+    </select>
+
+    <!--  关系映射  -->
+    <resultMap id="employeeDept" type="TbEmployee">
+        <id property="employeeId" column="employee_id"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="employeeName" column="employee_name"/>
+        <result property="phone" column="phone"/>
+        <result property="lastupdate" column="lastupdate"/>
+        <!-- 表的关系映射 -->
+        <association property="dept" javaType="top.huhuiyu.springboot2.entity.TbDept">
+            <result property="deptName" column="dept_name"/>
+            <result property="deptInfo" column="dept_info"/>
+        </association>
+    </resultMap>
+
+    <!-- 关系映射查询 -->
+    <select id="queryByAssociation" resultMap="employeeDept" parameterType="TbEmployee">
+        select a.* ,b.*
+        from tb_employee a
+        inner join tb_dept b on a.dept_id = b.dept_id
     </select>
 
 </mapper>

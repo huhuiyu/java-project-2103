@@ -3,6 +3,7 @@ server:
 # spring配置json应答中日期返回为时间戳格式
 spring:
   jackson:
+    default-property-inclusion: non-null
     serialization:
       write_dates_as_timestamps: true
   # 数据源配置

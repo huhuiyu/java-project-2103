@@ -2,6 +2,7 @@ package top.huhuiyu.springboot2.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import top.huhuiyu.springboot2.aop.AppException;
 import top.huhuiyu.springboot2.base.BaseResult;
 
 import java.util.Date;
@@ -31,4 +32,20 @@ public class Index {
         result.setData(new Date());
         return result;
     }
+
+    @GetMapping("/test/exception")
+    public BaseResult<String> testException(String mode) throws Exception {
+        if ("exception".equalsIgnoreCase(mode)) {
+            throw AppException.build("服务器异常");
+        }
+        BaseResult<String> result = new BaseResult<>();
+        result.setCode(200);
+        result.setSuccess(true);
+        result.setMessage("服务器正常应答");
+        result.setData(mode);
+        return result;
+    }
+
+//    api.huhuiyu.top
+
 }
