@@ -8,7 +8,7 @@ import { BaseResult } from '../ts/BaseResult'
  * 后端服务器配置信息
  */
 let serverInfo = {
-  url: 'https://service.huhuiyu.top/teach_project_service',
+  url: 'https://service.huhuiyu.top',
   tokenKey: 'teach_project_service_token',
 
   saveToken: (data: BaseResult) => {
