@@ -43,3 +43,42 @@
   - spark-md5密码库类型定义：`npm i --save-dev @types/spark-md5`
   - sass样式：`npm install -D sass`
 - 模块的安装可以在`package.json`中验证
+- 项目统一格式化配置（非必须）
+  - `vscode`工作区配置是在`.vscode/settings.json`文件中
+  - 项目的配置是在项目目录中的`.prettierrc.json`文件中
+- 项目文件精简和个性化
+  - `index.html`修改
+    - 去掉`link`标记，也就是拿掉默认的网站图标，或者修改成自己的图标
+    - 修改`title`的内容为自己网站标题
+  - 删除`public`文件夹
+  - 删除`src/assets`文件夹
+  - 删除`src/components`文件夹
+  - 删除`style.css`文件
+  - 修改`main.ts`文件
+    - 删除`import './style.css'`导入
+  - 替换`src/App.vue`的内容为一行：`<template>网站建设中。。。</template>`
+  - 格式化所有文件
+  - 控制台执行`npm run dev`启动项目查看效果
+- 路由配置
+  - 在`src`中创建`view`目录
+  - 在`view`目录创建`Home.vue`文件
+    - 内容为一行：`<template>网站建设中。。。</template>`
+  - 在`view`目录创建`About.vue`文件
+    - 内容为一行：`<template>关于黑暗骑士的网站</template>`
+  - 在`src`中创建`router`目录
+  - 在`router`中创建`index.ts`文件
+    - 内容参考文件：[默认路由文件](./index.ts)
+  - 修改`src/main.ts`加入路由配置
+    - 添加`import { router } from './router/index'`
+    - 修改`createApp(App).mount('#app')`这一行为下面的多行
+      - `let app = createApp(App)`
+      - `app.use(router)`
+      - `app.mount('#app')`
+  - 修改`src/App.vue`，替换内容为下面的多行来启用路由视图
+    - `<template>`
+    - `<RouterView></RouterView>`
+    - `</template>`
+  - 控制的执行`npm run dev`启动项目
+    - 默认看到的是`Home.vue`的内容
+    - 地址栏加上`/about`看到的是`About.vue`的内容
+    - 路由功能到此就配置成功
