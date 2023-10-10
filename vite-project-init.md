@@ -82,3 +82,10 @@
     - 默认看到的是`Home.vue`的内容
     - 地址栏加上`/about`看到的是`About.vue`的内容
     - 路由功能到此就配置成功
+- `element-plus`ui框架配置
+  - 修改`src/main.ts`添加`import 'element-plus/dist/index.css'`
+  - 修改`src/App.vue`内容为：[参考文件](./App.vue)
+  - 在`src`中添加`types.d.ts`
+    - 内容为：`declare module 'element-plus/dist/locale/zh-cn.mjs'`
+  - 修改`src/About`内容为[参考文件](./About.vue)
+  - 启动项目，打开`/about`页面可以看到饿了么plus的按钮就完成了导入流程
