@@ -1,6 +1,7 @@
 import { createRouter, RouteRecordRaw, createWebHistory } from 'vue-router'
 import manage from './manage'
 import study from './study'
+import user from './user'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -20,6 +21,18 @@ const routes: RouteRecordRaw[] = [
 ]
   .concat(manage)
   .concat(study)
+  .concat(user)
+  .concat([
+    {
+      path: '/error',
+      component: () => import('../view/Error.vue'),
+    },
+    // 全局路由拦截，一定在最后，也就是所有不在路由表中的都要被它拦截
+    {
+      path: '/:pathMatch(.*)*',
+      redirect: '/error',
+    },
+  ])
 
 // 创建router
 const router = createRouter({

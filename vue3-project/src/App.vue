@@ -10,4 +10,8 @@ import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
   </ElConfigProvider>
 </template>
 
-<style scoped></style>
+<style>
+body {
+  margin: 0px;
+}
+</style>

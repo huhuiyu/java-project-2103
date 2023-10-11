@@ -67,7 +67,7 @@
     - 内容为一行：`<template>关于黑暗骑士的网站</template>`
   - 在`src`中创建`router`目录
   - 在`router`中创建`index.ts`文件
-    - 内容参考文件：[默认路由文件](./index.ts)
+    - 内容点击[连接](#基本路由)查看
   - 修改`src/main.ts`加入路由配置
     - 添加`import { router } from './router/index'`
     - 修改`createApp(App).mount('#app')`这一行为下面的多行
@@ -84,8 +84,82 @@
     - 路由功能到此就配置成功
 - `element-plus`ui框架配置
   - 修改`src/main.ts`添加`import 'element-plus/dist/index.css'`
-  - 修改`src/App.vue`内容为：[参考文件](./App.vue)
+  - 修改`src/App.vue`的内容，内容点击[连接](#element-plus)查看
   - 在`src`中添加`types.d.ts`
     - 内容为：`declare module 'element-plus/dist/locale/zh-cn.mjs'`
-  - 修改`src/About`内容为[参考文件](./About.vue)
+  - 修改`src/About`内容，内容点击[连接](#ui-abuout)查看
   - 启动项目，打开`/about`页面可以看到饿了么plus的按钮就完成了导入流程
+
+## 代码部分
+
+### 基本路由
+
+```ts
+import { createRouter, RouteRecordRaw, createWebHistory } from 'vue-router'
+
+const routes: RouteRecordRaw[] = [
+  {
+    // path就是地址栏访问路径
+    path: '/',
+    // component表示path路径对应的页面文件
+    component: () => import('../view/Home.vue'),
+  },
+  {
+    path: '/about',
+    component: () => import('../view/About.vue'),
+  }
+]
+
+// 创建router
+const router = createRouter({
+  // 配置为Hash模式
+  history: createWebHistory(import.meta.env.BASE_URL),
+  // 配置toures
+  routes,
+  // 路由跳转时返回顶部
+  scrollBehavior() {
+    return { top: 0 }
+  },
+})
+
+// 设置前置路由守卫
+router.beforeEach((to, from, next) => {
+  console.log('路由前置：', to, from)
+  next()
+})
+
+// 设置后置路由守卫
+router.afterEach((to, from, failure) => {
+  console.log('路由后置：', to, from, failure)
+})
+
+export { router }
+
+```
+
+### element-plus
+
+```vue
+<template>
+  <ElConfigProvider :locale="zhCn">
+    <RouterView></RouterView>
+  </ElConfigProvider>
+</template>
+
+<script setup lang="ts">
+import { ElConfigProvider } from 'element-plus'
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
+</script>
+```
+
+### ui-abuout
+
+```vue
+<template>
+  <ElButton type="primary">关于黑暗骑士的网站</ElButton>
+</template>
+
+<script lang="ts" setup>
+import { ElButton } from 'element-plus';
+</script>
+```
