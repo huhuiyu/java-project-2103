@@ -49,6 +49,12 @@
             <version>1.4.7</version>
         </dependency>
 
+        <!-- springboot校验 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
         <!-- springboot测试包-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

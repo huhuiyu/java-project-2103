@@ -31,6 +31,14 @@ import { FormRules, ElButton, ElCard, ElForm, ElFormItem, ElInput, FormInstance 
 const myform = ref<FormInstance>()
 
 const user = ref(new TbUser())
+const checkUsername = (rule: any, value: string, cb: any) => {
+  console.log(rule)
+  if (/^[a-zA-Z][a-zA-Z0-9_]{3,15}$/.test(value)) {
+    cb()
+  } else {
+    cb(new Error('用户名必须是字母开头，且长度是4-15位'))
+  }
+}
 
 // 校验规则定义
 const rules = reactive<FormRules>({
@@ -38,6 +46,9 @@ const rules = reactive<FormRules>({
     {
       required: true,
       message: '登录名称必须填写',
+    },
+    {
+      validator: checkUsername,
     },
   ],
   password: [
@@ -68,6 +79,7 @@ function reset(myform: FormInstance) {
   align-items: center;
   > div {
     transform: translateY(-10vh);
+    min-width: 20vw;
   }
 }
 </style>

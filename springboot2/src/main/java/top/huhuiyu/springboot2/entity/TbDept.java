@@ -1,5 +1,10 @@
 package top.huhuiyu.springboot2.entity;
 
+import top.huhuiyu.springboot2.validate.DeptValidate;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -11,7 +16,11 @@ import java.util.Date;
  * @author 胡辉煜
  */
 public class TbDept {
+    @NotNull(message = "部门编号必须填写", groups = {DeptValidate.Update.class})
+    @Min(message = "部门编号不能小于1", value = 1, groups = {DeptValidate.Update.class})
     private Integer deptId;
+
+    @NotBlank(message = "部门名称必须填写", groups = {DeptValidate.Add.class, DeptValidate.Update.class})
     private String deptName;
     private String deptInfo;
     private Date lastupdate;
