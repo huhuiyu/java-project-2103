@@ -9,4 +9,15 @@
         values(#{username},#{password},#{salt})
     </insert>
 
+    <select id="queryByName" parameterType="TbUser" resultType="TbUser">
+        select * from tb_user
+        where username = #{username}
+    </select>
+
+    <update id="updatePwd" parameterType="TbUser">
+        update tb_user
+        set password = #{password}
+        where user_id = #{userId}
+    </update>
+
 </mapper>

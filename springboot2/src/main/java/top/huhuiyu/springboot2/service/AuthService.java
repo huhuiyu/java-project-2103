@@ -12,4 +12,8 @@ public interface AuthService {
     String makeRandString(int length);
 
     BaseResult<String> reg(TbUser tbUser) throws Exception;
+
+    BaseResult<TbUser> login(TbUser tbUser);
+
+    BaseResult modifyPwd(String oldpwd, TbUser tbUser);
 }

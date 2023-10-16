@@ -42,6 +42,14 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public BaseResult<String> reg(TbUser tbUser) throws Exception {
+        BaseResult<String> result = new BaseResult<>();
+        TbUser check = tbUserDAO.queryByName(tbUser);
+        if (check != null) {
+            result.setSuccess(false);
+            result.setCode(500);
+            result.setMessage("用户名已经存在");
+            return result;
+        }
         // 需要生成密码盐信息对密码进行加密
         String salt = makeRandString(6);
         // 密码一次md5加密
@@ -55,7 +63,6 @@ public class AuthServiceImpl implements AuthService {
         tbUser.setSalt(salt);
         int i = tbUserDAO.add(tbUser);
         // 如果添加失败就中断流程，返回错误应答
-        BaseResult<String> result = new BaseResult<>();
         if (i != 1) {
             result.setSuccess(false);
             result.setCode(500);
@@ -73,6 +80,84 @@ public class AuthServiceImpl implements AuthService {
         result.setCode(i == 1 ? 200 : 500);
         return result;
     }
+
+    @Override
+    public BaseResult<TbUser> login(TbUser tbUser) {
+        // 通过姓名查询用户是否存在
+        TbUser check = tbUserDAO.queryByName(tbUser);
+        BaseResult<TbUser> result = new BaseResult<>();
+        if (check == null) {
+            result.setSuccess(false);
+            result.setCode(500);
+            result.setMessage("用户不存在");
+            return result;
+        }
+        // 校验密码
+        String pwd = tbUser.getPassword();
+        // 一次加密
+        pwd = DigestUtils.md5DigestAsHex(pwd.getBytes(StandardCharsets.UTF_8));
+        // 二次加密
+        pwd = pwd + check.getSalt();
+        pwd = DigestUtils.md5DigestAsHex(pwd.getBytes(StandardCharsets.UTF_8));
+        if (!pwd.equalsIgnoreCase(check.getPassword())) {
+            result.setSuccess(false);
+            result.setCode(500);
+            result.setMessage("密码不正确");
+            return result;
+        }
+        // 用户冻结的情况
+        if ("n".equalsIgnoreCase(check.getEnable())) {
+            result.setSuccess(false);
+            result.setCode(500);
+            result.setMessage("用户已经被冻结");
+            return result;
+        }
+        // 登录成功
+        result.setSuccess(true);
+        result.setCode(200);
+        result.setMessage("登录成功");
+        // 传回完整用户信息（不必要的）
+        result.setData(check);
+        return result;
+    }
+
+
+    @Override
+    public BaseResult modifyPwd(String oldpwd, TbUser tbUser) {
+        BaseResult result = new BaseResult();
+        // 获取原生的用户信息
+        TbUser check = tbUserDAO.queryByName(tbUser);
+        if (check == null) {
+            result.setSuccess(false);
+            result.setCode(500);
+            result.setMessage("用户不存在");
+            return result;
+        }
+        // 校验原密码
+        oldpwd = DigestUtils.md5DigestAsHex(oldpwd.getBytes(StandardCharsets.UTF_8));
+        oldpwd = oldpwd + check.getSalt();
+        oldpwd = DigestUtils.md5DigestAsHex(oldpwd.getBytes(StandardCharsets.UTF_8));
+        if (!oldpwd.equalsIgnoreCase(check.getPassword())) {
+            result.setSuccess(false);
+            result.setCode(500);
+            result.setMessage("原密码不正确");
+            return result;
+        }
+        // 修改密码
+        String newpwd = tbUser.getPassword();
+        newpwd = DigestUtils.md5DigestAsHex(newpwd.getBytes(StandardCharsets.UTF_8));
+        newpwd = newpwd + check.getSalt();
+        newpwd = DigestUtils.md5DigestAsHex(newpwd.getBytes(StandardCharsets.UTF_8));
+        check.setPassword(newpwd);
+        int i = tbUserDAO.updatePwd(check);
+
+        result.setSuccess(i == 1);
+        result.setMessage(i == 1 ? "密码修改成功" : "密码修改失败");
+        result.setCode(i == 1 ? 200 : 500);
+        return result;
+
+    }
+
 
     public AuthServiceImpl(TbUserDAO tbUserDAO, TbUserInfoDAO tbUserInfoDAO) {
         this.tbUserDAO = tbUserDAO;

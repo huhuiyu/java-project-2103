@@ -19,4 +19,14 @@ public class AuthController {
         return authService.reg(tbUser);
     }
 
+    @PostMapping("/login")
+    public BaseResult<TbUser> login(TbUser tbUser) {
+        return authService.login(tbUser);
+    }
+
+    @PostMapping("/modifyPwd")
+    public BaseResult modifyPwd(String oldpwd, TbUser tbUser) throws Exception {
+        return authService.modifyPwd(oldpwd, tbUser);
+    }
+
 }
