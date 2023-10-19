@@ -4,9 +4,50 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.huhuiyu.springboot2.dao.TbNewsDAO">
 
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from tb_news
+        where nid = #{nid}
+    </delete>
+
+    <update id="update" parameterType="TbNews">
+        update tb_news
+        set title=#{title},info=#{info},source=#{source}
+        where nid = #{nid}
+    </update>
+
     <insert id="add" parameterType="TbNews">
         insert into tb_news(title,info,source)
         values(#{title},#{info},#{source})
     </insert>
+
+    <select id="query_COUNT" parameterType="TbNews" resultType="java.lang.Integer">
+        select count(*) from tb_news
+        <where>
+            <if test="title != null and title != ''">
+                and title like #{title}
+            </if>
+            <if test="source != null and source != ''">
+                and source = #{source}
+            </if>
+        </where>
+    </select>
+
+    <select id="query" parameterType="TbNews" resultType="TbNews">
+        select nid,title,source,lastupdate from tb_news
+        <where>
+            <if test="title != null and title != ''">
+                and title like #{title}
+            </if>
+            <if test="source != null and source != ''">
+                and source = #{source}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryByKey" parameterType="java.lang.Integer" resultType="TbNews">
+        select nid,title,info,source,lastupdate from tb_news
+        where nid = #{nid}
+    </select>
+
 
 </mapper>
