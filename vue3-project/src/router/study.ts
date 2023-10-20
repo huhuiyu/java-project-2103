@@ -8,6 +8,14 @@ const routers = [
     path: '/study/complife',
     component: () => import('../view/study/CompLife.vue'),
   },
+  {
+    path: '/study/pinia',
+    component: () => import('../view/study/Pinia.vue'),
+  },
+  {
+    path: '/study/piniaother',
+    component: () => import('../view/study/PiniaOther.vue'),
+  },
 ]
 
 export default routers

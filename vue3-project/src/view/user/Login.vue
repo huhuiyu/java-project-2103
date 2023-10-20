@@ -10,7 +10,7 @@
               <ElInput v-model="user.username" placeholder="登录名"></ElInput>
             </ElFormItem>
             <ElFormItem prop="password">
-              <ElInput v-model="user.password" placeholder="密码"></ElInput>
+              <ElInput :show-password="true" v-model="user.password" placeholder="密码"></ElInput>
             </ElFormItem>
             <ElFormItem>
               <ElButton @click="login(myform)" type="primary">登录</ElButton>
@@ -26,11 +26,18 @@
 <script lang="ts" setup>
 import { ref, reactive } from 'vue'
 import { TbUser, TbUserInfo, UserOtherInfo } from '../../ts/UserInfo'
-import { FormRules, ElButton, ElCard, ElForm, ElFormItem, ElInput, FormInstance } from 'element-plus'
+import { ElMessageBox, FormRules, ElButton, ElCard, ElForm, ElFormItem, ElInput, FormInstance } from 'element-plus'
+import { ApiService } from '../../ts/ApiService'
+import { BaseResult } from '../../ts/BaseResult'
+import Tools from '../../ts/Tools'
 
 const myform = ref<FormInstance>()
 
 const user = ref(new TbUser())
+user.value.username = 'user'
+user.value.password = 'user-pwd'
+
+
 const checkUsername = (rule: any, value: string, cb: any) => {
   console.log(rule)
   if (/^[a-zA-Z][a-zA-Z0-9_]{3,15}$/.test(value)) {
@@ -62,6 +69,14 @@ const rules = reactive<FormRules>({
 function login(myform: FormInstance) {
   myform.validate((valid) => {
     console.log('表单校验结果：', valid)
+    if (valid) {
+      user.value.password = Tools.md5(user.value.password)
+      ApiService.post('/user/auth/login', user.value, (data: BaseResult) => {
+        if (data.success) {
+          ElMessageBox.alert(data.message)
+        }
+      })
+    }
   })
 }
 
