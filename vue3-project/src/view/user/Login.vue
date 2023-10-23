@@ -24,6 +24,14 @@
 </template>
 
 <script lang="ts" setup>
+// 路由的部分
+import { useRouter } from 'vue-router'
+const router = useRouter()
+// 状态管理的部分
+import { store } from '../../store/index'
+
+const { updateUserInfo } = store()
+
 import { ref, reactive } from 'vue'
 import { TbUser, TbUserInfo, UserOtherInfo } from '../../ts/UserInfo'
 import { ElMessageBox, FormRules, ElButton, ElCard, ElForm, ElFormItem, ElInput, FormInstance } from 'element-plus'
@@ -36,7 +44,6 @@ const myform = ref<FormInstance>()
 const user = ref(new TbUser())
 user.value.username = 'user'
 user.value.password = 'user-pwd'
-
 
 const checkUsername = (rule: any, value: string, cb: any) => {
   console.log(rule)
@@ -73,7 +80,14 @@ function login(myform: FormInstance) {
       user.value.password = Tools.md5(user.value.password)
       ApiService.post('/user/auth/login', user.value, (data: BaseResult) => {
         if (data.success) {
-          ElMessageBox.alert(data.message)
+          // 获取用信息
+          updateUserInfo(() => {
+            
+            ElMessageBox.alert(data.message).then(() => {
+              router.push('/user/main')
+            })
+
+          })
         }
       })
     }
