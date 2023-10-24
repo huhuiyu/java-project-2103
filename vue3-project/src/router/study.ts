@@ -16,6 +16,14 @@ const routers = [
     path: '/study/piniaother',
     component: () => import('../view/study/PiniaOther.vue'),
   },
+  {
+    path: '/study/routerinfo',
+    component: () => import('../view/study/RouterInfo.vue'),
+  },
+  {
+    path: '/study/routerparam/:info',
+    component: () => import('../view/study/RouterParam.vue'),
+  },
 ]
 
 export default routers

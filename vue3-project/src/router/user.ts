@@ -12,6 +12,10 @@ const routers = [
     path: '/user/message',
     component: () => import('../view/user/Message.vue'),
   },
+  {
+    path: '/user/messagedetail/:id',
+    component: () => import('../view/user/MessageDetail.vue'),
+  },
 ]
 
 export default routers

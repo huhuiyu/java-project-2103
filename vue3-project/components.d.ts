@@ -20,6 +20,7 @@ declare module 'vue' {
     ElImage: typeof import('element-plus/es')['ElImage']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElTable: typeof import('element-plus/es')['ElTable']
+    ElTag: typeof import('element-plus/es')['ElTag']
     MyCompOne: typeof import('./src/components/MyCompOne.vue')['default']
     PageComp: typeof import('./src/components/PageComp.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
