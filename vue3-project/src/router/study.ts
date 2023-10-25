@@ -24,6 +24,10 @@ const routers = [
     path: '/study/routerparam/:info',
     component: () => import('../view/study/RouterParam.vue'),
   },
+  {
+    path: '/study/editor',
+    component: () => import('../view/study/Editor.vue'),
+  },
 ]
 
 export default routers
