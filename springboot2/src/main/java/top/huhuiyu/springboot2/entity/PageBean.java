@@ -70,4 +70,11 @@ public class PageBean implements Serializable {
         return pageCount;
     }
 
+
+    @Override
+    public String toString() {
+        return "PageBean{" + "pageNumber=" + pageNumber + ", pageSize=" + pageSize + ", total=" + total + ", pageCount=" + pageCount + '}';
+    }
+
+
 }
