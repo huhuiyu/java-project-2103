@@ -10,7 +10,8 @@ import java.util.Date;
 @Component
 public class JwtUtils {
     private static final String PASSWORD = "springboot2.huhuiyu.top.key";
-    private static final int EXPIRATION_TIME = 2 * 60 * 1000;
+
+    private static final int EXPIRATION_TIME = 45 * 60 * 1000;
 
     public String makeToken(String info) {
         // 过期时间设置
@@ -21,8 +22,7 @@ public class JwtUtils {
     }
 
     public String parseToken(String token) {
-        Algorithm algorithm = Algorithm.HMAC256(PASSWORD);
-        DecodedJWT decodedJWT = JWT.require(algorithm).build().verify(token);
+        DecodedJWT decodedJWT = JWT.decode(token);
         Date expiresAt = decodedJWT.getExpiresAt();
         Date now = new Date();
         // 过期的判断

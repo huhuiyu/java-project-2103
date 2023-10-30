@@ -1,15 +1,16 @@
-package top.huhuiyu.springboot2.config;
+package top.huhuiyu.springboot2_auth.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import top.huhuiyu.springboot2.interceptor.AppInterceptor;
+import top.huhuiyu.springboot2_auth.interceptor.AppInterceptor;
 
 @Configuration
 @RequiredArgsConstructor
 public class MvcConfig implements WebMvcConfigurer {
+
     private final AppInterceptor appInterceptor;
 
     @Override
@@ -26,9 +27,9 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addMapping("/**").allowedMethods("*").allowedOrigins("*").allowCredentials(false);
     }
 
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        // 添加拦截器
         registry.addInterceptor(appInterceptor);
         WebMvcConfigurer.super.addInterceptors(registry);
     }

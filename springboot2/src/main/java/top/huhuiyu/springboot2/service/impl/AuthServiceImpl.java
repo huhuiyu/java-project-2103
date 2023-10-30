@@ -1,5 +1,7 @@
 package top.huhuiyu.springboot2.service.impl;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
@@ -9,6 +11,7 @@ import top.huhuiyu.springboot2.dao.TbUserInfoDAO;
 import top.huhuiyu.springboot2.entity.TbUser;
 import top.huhuiyu.springboot2.entity.TbUserInfo;
 import top.huhuiyu.springboot2.service.AuthService;
+import top.huhuiyu.springboot2.utils.JwtUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Random;
@@ -23,9 +26,12 @@ import java.util.Random;
 // rollbackFor表示发生什么异常的时候必须回滚事务
 // 事务的基本概念就是所有的数据库操作同生共死
 @Transactional(rollbackFor = Exception.class)
+@RequiredArgsConstructor
+@Slf4j
 public class AuthServiceImpl implements AuthService {
     private final TbUserDAO tbUserDAO;
     private final TbUserInfoDAO tbUserInfoDAO;
+    private final JwtUtils jwtUtils;
 
     private static final String RAND_STRINGS = "abcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -112,12 +118,15 @@ public class AuthServiceImpl implements AuthService {
             result.setMessage("用户已经被冻结");
             return result;
         }
+        log.debug("登录的用户信息：{}", check);
         // 登录成功
         result.setSuccess(true);
         result.setCode(200);
         result.setMessage("登录成功");
         // 传回完整用户信息（不必要的）
-        result.setData(check);
+//         result.setData(check);
+        // 发放token信息
+        result.setToken(jwtUtils.makeToken(check.getUserId() + ""));
         return result;
     }
 
@@ -157,12 +166,5 @@ public class AuthServiceImpl implements AuthService {
         return result;
 
     }
-
-
-    public AuthServiceImpl(TbUserDAO tbUserDAO, TbUserInfoDAO tbUserInfoDAO) {
-        this.tbUserDAO = tbUserDAO;
-        this.tbUserInfoDAO = tbUserInfoDAO;
-    }
-
 
 }
