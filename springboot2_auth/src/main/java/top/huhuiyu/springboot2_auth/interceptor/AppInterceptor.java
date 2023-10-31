@@ -8,7 +8,9 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import top.huhuiyu.springboot2_auth.entity.AuthInfo;
+import top.huhuiyu.springboot2_auth.utils.AuthInfoUtils;
 import top.huhuiyu.springboot2_auth.utils.IpUtils;
+import top.huhuiyu.springboot2_auth.utils.JwtUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 @RequiredArgsConstructor
 public class AppInterceptor implements HandlerInterceptor {
-    private final ThreadLocal<AuthInfo> authInfoThreadLocal;
+
+    public static final String TOKEN_HEADER = "Authorization";
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -44,9 +47,11 @@ public class AppInterceptor implements HandlerInterceptor {
             authInfo.setMappingPath(String.format("%s%s", cpath, mpath));
             authInfo.setRequestUrl(requestPath);
             // token的处理
-
+            String token = request.getHeader(TOKEN_HEADER);
+            authInfo.setToken(token);
+            authInfo.setUserId(JwtUtils.parseUserIdToken(token));
             log.debug("授权信息：{}", authInfo);
-            authInfoThreadLocal.set(authInfo);
+            AuthInfoUtils.put(authInfo);
             log.debug("拦截器拦截请求信息：{} {}", requestPath, method);
         }
         return true;

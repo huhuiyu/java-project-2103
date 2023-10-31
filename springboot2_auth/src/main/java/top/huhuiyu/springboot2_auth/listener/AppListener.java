@@ -4,10 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
-import top.huhuiyu.springboot2_auth.entity.AuthInfo;
 import top.huhuiyu.springboot2_auth.utils.IpUtils;
 
 @Slf4j
@@ -18,11 +16,6 @@ public class AppListener implements ApplicationListener<ApplicationReadyEvent> {
     public static final String LOCAL_IP = "127.0.0.1";
     // springboot的环境配置信息
     private final Environment environment;
-
-    @Bean
-    public ThreadLocal<AuthInfo> authInfoThreadLocal() {
-        return new ThreadLocal<>();
-    }
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
