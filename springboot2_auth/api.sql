@@ -22,3 +22,9 @@ insert into tb_auth_role_api(role_id,api_id) values(1,3);
 insert into tb_auth_role_api(role_id,api_id) values(2,3);
 
 select * from tb_auth_role_api;
+
+
+-- 授权信息关联查询
+select a.*,b.*,c.* from tb_auth_role_api a
+inner join tb_auth_role b on a.role_id = b.role_id
+inner join tb_auth_api c on a.api_id = c.api_id;
