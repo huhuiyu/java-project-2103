@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@types/qs": "^6.9.9",
+    "@wangeditor/editor": "^5.1.23",
+    "@wangeditor/editor-for-vue": "^5.1.12",
     "axios": "^1.6.0",
     "element-plus": "^2.4.1",
     "pinia": "^2.1.7",
