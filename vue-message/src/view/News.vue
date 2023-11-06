@@ -21,8 +21,31 @@
     <div v-for="d in list">
       <el-card>
         <template #header>
-          <div>
+          <div class="header">
             <div>{{ d.source }}</div>
+            <div>
+              <svg @click="showModify(d)" t="1699252555088" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4035" width="32" height="32">
+                <path
+                  d="M571.52 136.832a32 32 0 0 1 44.8 0.64l174.4 175.904a32 32 0 0 1-1.632 46.624L368.864 728.064a32 32 0 0 1-21.76 7.936l-155.776-3.328a32 32 0 0 1-31.328-32v-158.208a32 32 0 0 1 9.92-23.168z m42.464 514.496l239.84 4.672a32 32 0 1 1-1.248 64l-239.84-4.672a32 32 0 1 1 1.28-64zM592.96 204.8L224 556.16v113.184l112 2.4 385.312-337.472L592.96 204.8z m259.296 606.528a32 32 0 0 1 0.48 64l-628.48 4.672a32 32 0 0 1-0.48-64l628.48-4.672z"
+                  fill="#111111"
+                  p-id="4036"
+                ></path>
+              </svg>
+              <svg @click="del(d)" t="1699252624472" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5050" width="32" height="32">
+                <path d="M607.897867 768.043004c-17.717453 0-31.994625-14.277171-31.994625-31.994625L575.903242 383.935495c0-17.717453 14.277171-31.994625 31.994625-31.994625s31.994625 14.277171 31.994625 31.994625l0 351.94087C639.892491 753.593818 625.61532 768.043004 607.897867 768.043004z" fill="#575B66" p-id="5051"></path>
+                <path d="M415.930119 768.043004c-17.717453 0-31.994625-14.277171-31.994625-31.994625L383.935495 383.935495c0-17.717453 14.277171-31.994625 31.994625-31.994625 17.717453 0 31.994625 14.277171 31.994625 31.994625l0 351.94087C447.924744 753.593818 433.647573 768.043004 415.930119 768.043004z" fill="#575B66" p-id="5052"></path>
+                <path
+                  d="M928.016126 223.962372l-159.973123 0L768.043004 159.973123c0-52.980346-42.659499-95.983874-95.295817-95.983874L351.94087 63.989249c-52.980346 0-95.983874 43.003528-95.983874 95.983874l0 63.989249-159.973123 0c-17.717453 0-31.994625 14.277171-31.994625 31.994625s14.277171 31.994625 31.994625 31.994625l832.032253 0c17.717453 0 31.994625-14.277171 31.994625-31.994625S945.73358 223.962372 928.016126 223.962372zM319.946246 159.973123c0-17.545439 14.449185-31.994625 31.994625-31.994625l320.806316 0c17.545439 0 31.306568 14.105157 31.306568 31.994625l0 63.989249L319.946246 223.962372 319.946246 159.973123 319.946246 159.973123z"
+                  fill="#575B66"
+                  p-id="5053"
+                ></path>
+                <path
+                  d="M736.048379 960.010751 288.123635 960.010751c-52.980346 0-95.983874-43.003528-95.983874-95.983874L192.139761 383.591466c0-17.717453 14.277171-31.994625 31.994625-31.994625s31.994625 14.277171 31.994625 31.994625l0 480.435411c0 17.717453 14.449185 31.994625 31.994625 31.994625l448.096758 0c17.717453 0 31.994625-14.277171 31.994625-31.994625L768.215018 384.795565c0-17.717453 14.277171-31.994625 31.994625-31.994625s31.994625 14.277171 31.994625 31.994625l0 479.231312C832.032253 916.835209 789.028725 960.010751 736.048379 960.010751z"
+                  fill="#575B66"
+                  p-id="5054"
+                ></path>
+              </svg>
+            </div>
           </div>
         </template>
         <div>
@@ -67,6 +90,29 @@
 
         <ElFormItem>
           <ElButton type="primary" @click="add">发布</ElButton>
+        </ElFormItem>
+      </ElForm>
+    </div>
+  </ElDialog>
+
+  <!-- 编辑的对话框 -->
+  <ElDialog title="编辑新闻" v-model="mvisible" @closed="query">
+    <div>
+      <ElForm>
+        <ElFormItem>
+          <ElInput v-model="modifyInfo.title" placeholder="请输入标题"></ElInput>
+        </ElFormItem>
+
+        <ElFormItem>
+          <ElInput v-model="modifyInfo.source" placeholder="请输入来源"></ElInput>
+        </ElFormItem>
+
+        <ElFormItem>
+          <WangEditorComp @value-change="chnage_modify_value" :init-value="modifyInfo.info"></WangEditorComp>
+        </ElFormItem>
+
+        <ElFormItem>
+          <ElButton type="primary" @click="modify">保存</ElButton>
         </ElFormItem>
       </ElForm>
     </div>
@@ -155,6 +201,47 @@ const add = () => {
 }
 
 //#endregion
+
+//#region 修改新闻的部分
+const chnage_modify_value = (value: any) => {
+  modifyInfo.value.info = value
+}
+
+const mvisible = ref(false)
+const modifyInfo = ref({
+  nid: -1,
+  title: '',
+  info: '',
+  source: '',
+})
+
+const showModify = (info: any) => {
+  ApiService.get(`/crud/news/${info.nid}`, {}, (data: any) => {
+    modifyInfo.value = data.data
+    mvisible.value = true
+  })
+}
+
+const modify = () => {
+  ApiService.put(`/crud/news/${modifyInfo.value.nid}`, modifyInfo.value, (data: any) => {
+    ElMessageBox.alert(data.message, '黑暗骑士的网站')
+  })
+}
+
+//#endregion
+
+//#region 删除新闻的部分
+const del = (info: any) => {
+  ElMessageBox.confirm(`是否删除来自${info.source}的新闻:${info.title}`, '删除确认')
+    .then(() => {
+      ApiService.delete(`/crud/news/${info.nid}`, {}, (data: any) => {
+        ElMessageBox.alert(data.message, '黑暗骑士的网站').then(query).catch(query)
+      })
+    })
+    .catch(() => {})
+}
+
+//#endregion
 </script>
 
 <style lang="scss" scoped>
@@ -176,6 +263,18 @@ const add = () => {
     cursor: pointer;
     &:hover {
       color: #1890ff;
+    }
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    svg {
+      margin: 0.5rem;
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.4);
+      }
     }
   }
 }

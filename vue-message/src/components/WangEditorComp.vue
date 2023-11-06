@@ -1,7 +1,7 @@
 <template>
   <div style="border: 1px solid #ccc">
     <Toolbar style="border-bottom: 1px solid #ccc" :editor="editorRef" :defaultConfig="toolbarConfig" />
-    <Editor @onChange="handleChange" style="height: 40vh; overflow-y: hidden" v-model="props.initValue" :defaultConfig="editorConfig" @onCreated="handleCreated" />
+    <Editor @onChange="handleChange" style="min-height: 20vh; max-height: 40vh; overflow-y: hidden" v-model="props.initValue" :defaultConfig="editorConfig" @onCreated="handleCreated" />
   </div>
   <hr />
 </template>
