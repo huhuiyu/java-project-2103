@@ -8,3 +8,10 @@
 import { ElConfigProvider } from 'element-plus'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 </script>
+
+<style lang="scss">
+body {
+  margin: 0px;
+  min-height: 100vh;
+}
+</style>
