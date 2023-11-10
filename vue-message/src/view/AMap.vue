@@ -1,7 +1,7 @@
 <template>
   <!-- 上中下布局，中间是地图 -->
   <div class="main-box">
-    <div> 高德地图 </div>
+    <div> 高德地图：<ElButton @click="openMap" type="primary">地图调起</ElButton> </div>
 
     <div>
       <div id="map-container"></div>
@@ -11,10 +11,13 @@
   </div>
 
   <!-- 搜索的部分 -->
-  <div>
+  <div class="search">
     <ElCard>
       <template #header>
-        <div>搜索表单</div>
+        <div style="display: flex">
+          <ElInput v-model="sinfo"></ElInput>
+          <ElButton @click="search" type="primary">搜索</ElButton>
+        </div>
       </template>
       <div id="divSearchInfo"> 请输入信息。。。 </div>
     </ElCard>
@@ -24,7 +27,7 @@
 <script lang="ts" setup>
 import { onMounted, ref, onUnmounted } from 'vue'
 import AMapLoader from '@amap/amap-jsapi-loader'
-import { ElCard } from 'element-plus'
+import { ElButton, ElCard, ElInput } from 'element-plus'
 
 // 记住地图对象
 let map: any = null
@@ -43,6 +46,22 @@ let placeSearch: any = null
 let sinfo = ref('')
 // 错误信息
 let error_info = ref('')
+
+const base_map_url = 'https://uri.amap.com/navigation'
+
+// 地图调起
+const openMap = () => {
+  let url = `${base_map_url}?from=${start_position.lng},${start_position.lat}&to=${map.getCenter().lng},${map.getCenter().lat}&mode=walk`
+  window.open(url)
+}
+
+// 搜索功能
+const search = () => {
+  if (sinfo.value.trim() == '') {
+    return
+  }
+  placeSearch.search(sinfo.value)
+}
 
 // 发起定位
 const startGeolocation = () => {
@@ -85,6 +104,12 @@ const startGeolocation = () => {
       }
       placeSearch = new amap.PlaceSearch({
         city: rs.regeocode.addressComponent.adcode,
+        pageSize: 5,
+        pageIndex: 1,
+        citylimit: true,
+        map: map,
+        panel: 'divSearchInfo',
+        autoFitView: true,
       })
     })
     // 定位作为组件添加到地图上
@@ -162,5 +187,11 @@ onUnmounted(() => {
   > div:nth-of-type(3) {
     padding: 1rem;
   }
+}
+
+.search {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
 }
 </style>
