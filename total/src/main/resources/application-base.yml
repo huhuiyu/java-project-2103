@@ -1,0 +1,6 @@
+server:
+  port: 12030
+# 配置文件加密密码
+jasypt:
+  encryptor:
+    password: Huhuiyu

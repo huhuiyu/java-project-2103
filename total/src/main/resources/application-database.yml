@@ -1,0 +1,28 @@
+# spring配置json应答中日期返回为时间戳格式
+spring:
+  jackson:
+    default-property-inclusion: non-null
+    serialization:
+      write_dates_as_timestamps: true
+  # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mysql.huhuiyu.top:3306/db_student?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2b8
+    username: ENC(SzS+U7170IqMRhQgemlGTTLZERgWS+Kz/k0n4PRBMvHDfBdgzYDlBUO85REHOqk+)
+    password: ENC(063te4sqx9vc/oDI8Qagrb0zQwQP4BAPJfeZYn+HCZCBgLlSCYiK0GNICn1+3teD)
+    hikari:
+      connection-test-query: select 1
+      max-lifetime: 60000
+# mybatis配置
+mybatis:
+  # 使用类型别名的包
+  type-aliases-package: top.huhuiyu.spirngboot2.total.entity
+  configuration:
+    # 下划线转驼峰
+    map-underscore-to-camel-case: true
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: y
+      logic-not-delete-value: n
